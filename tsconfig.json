@@ -8,7 +8,14 @@
       "esModuleInterop": true,                     // Permite importar módulos CommonJS com `import`
       "forceConsistentCasingInFileNames": true,    // Evita problemas com letras maiúsculas/minúsculas
       "moduleResolution": "node",                  // Resolve módulos como o Node.js faz
-      "skipLibCheck": true                         // Ignora checagem de tipos de bibliotecas
+      "skipLibCheck": true,
+      "baseUrl": "./src",
+      "paths": {
+        "@core/*": ["core/*"],
+        "@infra/*": ["infra/*"],
+        "@modules/*": ["modules/*"],
+        "@config/*": ["config/*"]
+      }
     },
     "include": ["src"],                            // Inclui todos os arquivos da pasta src
     "exclude": ["node_modules", "dist"]            // Exclui dependências e arquivos compilados

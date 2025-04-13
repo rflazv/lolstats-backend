@@ -9,7 +9,7 @@ export class API {
     }
 
     private initializeRoutes() {
-        this.router.get('/healthcheck', (req: Request, res: Response) => {
+        this.router.get('/healthcheck', (_: Request, res: Response) => {
             res.json({ message: 'API is working!' });
         });
     }
