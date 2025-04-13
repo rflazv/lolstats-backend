@@ -19,10 +19,10 @@ export abstract class Controller {
 
     public async execute(req: Request, res: Response): Promise<void> {
         try {
-            const result = await this.executeImplementation(req, res);
-            res.json(result);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+            await this.executeImplementation(req, res);
+        } catch (err) {
+            console.error(`[BaseController]: Uncaught controller error`);
+            this.fail(res, err);
         }
     }
 
@@ -68,5 +68,12 @@ export abstract class Controller {
 
     public internalServerError(res: Response, message: string) {
         return res.status(500).json({ message });
+    }
+
+    public fail(res: Response, error: string): Response {
+        console.error(error);
+        return res.status(500).json({
+          message: error
+        })
     }
 }

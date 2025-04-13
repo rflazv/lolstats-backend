@@ -14,7 +14,7 @@ export class UserRepository implements IUserRepository {
     this.userModel = userModel;
   }
 
-  async create(user: User): Promise<void> {
+  async create(user: UserSchemaType): Promise<void> {
     const newUser = new this.userModel(user);
     await newUser.save();
   }

@@ -1,35 +1,38 @@
-import { IValidator } from '@core/logic/IValidator';
 import * as yup from 'yup';
+
+export type ValidationResult<T> =
+  | { success: true; data: T }
+  | { success: false; errors: Record<string, string> };
+
+export type FailedValidation<T> = Extract<ValidationResult<T>, { success: false }>;
+export interface IValidator<T> {
+  validate(data: unknown): Promise<ValidationResult<T>>;
+}
 
 export class YupAdapter<T> implements IValidator<T> {
   constructor(private readonly schema: yup.ObjectSchema<T>) {}
 
-  async validate<T>(data: unknown): Promise<T> {
+  async validate(data: unknown): Promise<ValidationResult<T>> {
     try {
-      return await this.schema.validate(data, {
+      const validatedData = await this.schema.validate(data, {
         abortEarly: false,
         stripUnknown: true,
-      }) as T;
+      });
+
+      return { success: true, data: validatedData as T };
     } catch (err) {
       if (err instanceof yup.ValidationError) {
-        const formattedErrors = err.inner.reduce((acc: Record<string, string>, curr) => {
+        const errors = err.inner.reduce((acc: Record<string, string>, curr) => {
           if (curr.path) acc[curr.path] = curr.message;
           return acc;
         }, {});
-        throw new ValidationException(formattedErrors);
+        return { success: false, errors };
       }
 
-      throw err;
+      return {
+        success: false,
+        errors: { general: 'Erro desconhecido na validação' },
+      };
     }
-  }
-}
-
-export class ValidationException extends Error {
-  public readonly errors: Record<string, string>;
-
-  constructor(errors: Record<string, string>) {
-    super('Validation failed');
-    this.name = 'ValidationException';
-    this.errors = errors;
   }
 }

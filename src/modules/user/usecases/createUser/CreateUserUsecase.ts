@@ -6,14 +6,24 @@ import { CreateUserResponse } from "./models/responses/CreateUserResponse";
 import { User } from "@modules/user/domain/User";
 import { CreateUserErrors } from "./CreateUserErrors";
 import { IUserRepository } from "@modules/user/repository/IUserRepository";
+import { UserMappers } from "@modules/user/mappers/UserMappers";
 
 
 export class CreateUserUsecase implements UseCase<ICreateUserRequest, Promise<CreateUserResponse>> {
     private userRepository: IUserRepository;
 
+    constructor(userRepository: IUserRepository) {
+        this.userRepository = userRepository;
+    }
 
     async execute(request: ICreateUserRequest): Promise<CreateUserResponse> {
         const { name, email } = request;
+
+        const existingUser = await this.userRepository.getUserByEmail(email);
+        if (existingUser) {
+            return fail(Result.fail(CreateUserErrors.UserAlreadyExists.create(email)));
+        }
+
         const userOrError = User.create(
             {
                 name,
@@ -29,12 +39,9 @@ export class CreateUserUsecase implements UseCase<ICreateUserRequest, Promise<Cr
         }
 
         const user = userOrError.getValue();
-        const existingUser = await this.userRepository.getUserByEmail(user.email);
-        if (existingUser) {
-            return fail(Result.fail(CreateUserErrors.UserAlreadyExists.create(user.email)));
-        }
 
-        await this.userRepository.create(user.name, user.email);
+
+        await this.userRepository.create(new UserMappers().toPersistence(user));
 
         console.log("User created:", user);
         return success(Result.ok());

@@ -3,6 +3,7 @@ import { CreateUserUsecase } from "./CreateUserUsecase";
 import { CreateUserErrors } from "./CreateUserErrors";
 import { Request, Response } from "express";
 import { CreateUserValidator } from "./CreateUserValidator";
+import { ICreateUserRequest } from "./models/requests/ICreateUserRequest";
 
 
 export class CreateUserController extends Controller {
@@ -18,8 +19,13 @@ export class CreateUserController extends Controller {
 
     async executeImplementation(req: Request, res: Response): Promise<Response> {
         try {
-            const validatedData = await this.getValidatedData(req.body, this.validator);
-            const result = await this.usecase.execute(validatedData);
+            const validatedData = await this.validator.validate(req.body);
+            if (validatedData.isFail()) {
+                const resultError = validatedData.value.errorValue();
+                return this.badRequest(res, resultError.message);
+            }
+
+            const result = await this.usecase.execute(validatedData.value);
             if (result.isFail()) {
                 const resultError = result.value.errorValue();
                 const err = resultError.error;
@@ -36,6 +42,7 @@ export class CreateUserController extends Controller {
 
             return this.created(res);
         } catch (err) {
+            console.error(`[CreateUserController]: Uncaught controller error`, err);
             return this.internalServerError(res, err.message);
         }
     }

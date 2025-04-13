@@ -67,4 +67,16 @@ export namespace CreateUserErrors {
             return new UnableToCreateUser();
         }
     }
+
+    export class UnexpectedError extends Result<UseCaseError> {
+        constructor() {
+            super(false, {
+                message: `Unexpected error.`,
+            } as UseCaseError);
+        }
+
+        static create(): Result<UseCaseError> {
+            return new UnexpectedError();
+        }
+    }
 }

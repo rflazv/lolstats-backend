@@ -6,6 +6,6 @@
  * Generic type T would be a DomainEntity or a ValueObject type.
 */
 export abstract class Mapper<T> {
-    abstract toDomain(raw: any): T;
+    abstract toDomain(raw: T, id: string | null): T;
     abstract toPersistence(t: T): any;
 }
