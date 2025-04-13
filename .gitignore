@@ -1,0 +1,9 @@
+.env
+
+node_modules
+dist
+.vscode
+coverage
+.idea
+.DS_Store
+__MACOSX
