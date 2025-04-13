@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 
 
-export class API {
+export class Routes {
     private router: Router;
     constructor() {
         this.router = Router();

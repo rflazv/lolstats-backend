@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { IMetadataObject } from "@core/types/IMetadataObject";
 import { Validator } from "@core/logic/Validator";
 
@@ -15,7 +15,7 @@ export abstract class Controller {
         return metaData;
     }
 
-    protected abstract executeImplementation(req: Request, res: Response): Promise<unknown>;
+    protected abstract executeImplementation(req: Request, res: Response): Promise<Response>;
 
     public async execute(req: Request, res: Response): Promise<void> {
         try {

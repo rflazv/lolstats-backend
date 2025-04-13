@@ -1,23 +1,30 @@
 {
     "compilerOptions": {
       "target": "ES2020",                          // Versão de JS que será emitida
-      "module": "CommonJS",                        // Módulo usado pelo Node.js
+      "module": "CommonJS",
+      "lib": ["ES6"],                        // Módulo usado pelo Node.js
       "outDir": "./dist",                          // Pasta onde vão os arquivos compilados
       "rootDir": "./src",                          // Pasta onde está o código-fonte
       "strict": false,                              // Ativa verificações estritas
       "esModuleInterop": true,                     // Permite importar módulos CommonJS com `import`
       "forceConsistentCasingInFileNames": true,    // Evita problemas com letras maiúsculas/minúsculas
       "moduleResolution": "node",                  // Resolve módulos como o Node.js faz
+      "allowJs": true,
+      "removeComments": true,
+      "allowSyntheticDefaultImports": true,
+      "sourceMap": true,
       "skipLibCheck": true,
       "baseUrl": "./src",
       "paths": {
         "@core/*": ["core/*"],
-        "@infra/*": ["infra/*"],
+        "@infrastructure/*": ["infrastructure/*"],
         "@modules/*": ["modules/*"],
         "@config/*": ["config/*"]
       }
     },
-    "include": ["src"],                            // Inclui todos os arquivos da pasta src
-    "exclude": ["node_modules", "dist"]            // Exclui dependências e arquivos compilados
+    "include": [
+      "src/**/*"
+    ],                            // Inclui todos os arquivos da pasta src
+    "exclude": ["node_modules"]            // Exclui dependências e arquivos compilados
 }
   
