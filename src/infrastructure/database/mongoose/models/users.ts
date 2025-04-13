@@ -1,35 +1,38 @@
+import { IUser } from '@modules/user/domain/User';
 import { randomUUID } from 'crypto';
 import { DateTime } from 'luxon';
-import mongoose, { Model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const usersSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        default: () => randomUUID()
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    isActive: {
-        type: Boolean,
-        default: () => true
-    },
-    createdAt: {
-        type: Date,
-        default: () => DateTime.now().toUTC().toJSDate()
-    },
-    updatedAt: {
-        type: Date,
-        default: () => DateTime.now().toUTC().toJSDate()
-    },
+export type UserSchemaType = {
+  _id: string;
+} & IUser;
+
+const userSchema = new Schema<UserSchemaType>({
+  _id: {
+    type: String,
+    default: () => randomUUID(),
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  createdAt: {
+    type: Date,
+    default: () => DateTime.now().toUTC().toJSDate(),
+  },
+  updatedAt: {
+    type: Date,
+    default: () => DateTime.now().toUTC().toJSDate(),
+  },
 });
 
-export const users =
-    mongoose.models.users ||
-    mongoose.model<Model<Document>>("users", usersSchema, "users");
+export const UserModel = model<UserSchemaType>('User', userSchema);
