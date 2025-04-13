@@ -1,7 +1,6 @@
 "use strict"
 
-import { nanoid } from "nanoid";
-
+import { randomUUID } from "crypto";
 
 class Identifier<T> {
     constructor(private value: T) {
@@ -29,7 +28,7 @@ class Identifier<T> {
 
 export class UniqueEntityId extends Identifier<string | number> {
     constructor(id?: string | number) {
-        super(!!id ? id : nanoid())
+        super(!!id ? id : randomUUID())
     }
 }
 

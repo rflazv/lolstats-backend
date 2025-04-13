@@ -1,3 +1,4 @@
+import { UserRoutes } from '@modules/user/infrastructure/UserRoutes';
 import { Router, Request, Response } from 'express';
 
 
@@ -12,6 +13,8 @@ export class Routes {
         this.router.get('/healthcheck', (_: Request, res: Response) => {
             res.json({ message: 'API is working!' });
         });
+
+        new UserRoutes(this.router).configureRoutes();
     }
 
     public get routes(): Router {
