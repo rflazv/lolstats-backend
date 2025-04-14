@@ -6,7 +6,8 @@
       "outDir": "./dist",                          // Pasta onde vão os arquivos compilados
       "rootDir": "./src",                          // Pasta onde está o código-fonte
       "strict": false,                              // Ativa verificações estritas
-      "esModuleInterop": true,                     // Permite importar módulos CommonJS com `import`
+      "esModuleInterop": true, 
+      "resolveJsonModule": true,                    // Permite importar módulos CommonJS com `import`
       "forceConsistentCasingInFileNames": true,    // Evita problemas com letras maiúsculas/minúsculas
       "moduleResolution": "node",                  // Resolve módulos como o Node.js faz
       "allowJs": true,
