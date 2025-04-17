@@ -1,8 +1,9 @@
 import cors from "cors";
 import express, { Application, Router } from "express";
 
+
 export class Server {
-    private server: Application;
+  private server: Application;
 
   constructor(routes: Router) {
     this.server = express();
@@ -15,11 +16,10 @@ export class Server {
     this.server.use(cors());
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: true }));
-
   }
 
   protected initializeRoutes(router: Router): void {
-    this.server.use(router);
+    this.server.use("/api", router);
   }
 
   start(): void {
