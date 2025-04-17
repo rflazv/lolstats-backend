@@ -15,6 +15,7 @@
     "@types/luxon": "^3.6.2",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
@@ -22,7 +23,7 @@
   "dependencies": {
     "cls-hooked": "^4.2.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "luxon": "^3.6.1",
     "mongoose": "^8.13.2",

@@ -1,5 +1,6 @@
-import { UserRoutes } from '@modules/user/infrastructure/UserRoutes';
 import { Router, Request, Response } from 'express';
+import { UserRoutes } from '@modules/user/infrastructure/UserRoutes';
+import { ChampionRoutes } from '@modules/champions/infrastructure/ChampionRoutes';
 
 
 export class Routes {
@@ -15,6 +16,7 @@ export class Routes {
         });
 
         new UserRoutes(this.router).configureRoutes();
+        new ChampionRoutes(this.router).configureRoutes();
     }
 
     public get routes(): Router {

@@ -1,19 +1,24 @@
 import mongoose from 'mongoose';
-import Champion from '../modules/champions/champion.model'; 
-import championsData from '../data/cleanedChampions.json'; 
+import Champion from '../infrastructure/database/mongoose/models/Champion';  
+import championsData from '../data/cleanedChampions.json';  
+import dotenv from 'dotenv'; 
 
-const MONGODB_URI = 'mongodb://localhost:27017/lolstats'; 
+dotenv.config(); 
+
+const MONGODB_URI = process.env.MONGO_URI; 
 
 async function importChampions() {
   try {
+    if (!MONGODB_URI) {
+      throw new Error("A URL do MongoDB não foi configurada.");
+    }
+    
     await mongoose.connect(MONGODB_URI);
     console.log('🟢 Conectado ao MongoDB com sucesso.');
 
-    
-    await Champion.deleteMany({});
+    await Champion.deleteMany({}); 
     console.log('🧹 Campeões antigos removidos do banco de dados.');
 
-    
     await Champion.insertMany(championsData.champions);
     console.log('✅ Campeões limpos importados com sucesso!');
 
