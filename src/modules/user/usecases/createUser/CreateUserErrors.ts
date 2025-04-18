@@ -36,6 +36,17 @@ export namespace CreateUserErrors {
         }
     }
 
+    export class RequiredPassword extends Result<UseCaseError> {
+        constructor() {
+            super(false, {
+                message: `Password is required.`,
+            } as UseCaseError);
+        }
+        static create(): Result<UseCaseError> {
+            return new RequiredPassword();
+        }
+    }
+
     export class InvalidEmail extends Result<UseCaseError> {
         constructor() {
             super(false, {

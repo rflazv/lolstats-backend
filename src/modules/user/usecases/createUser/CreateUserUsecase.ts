@@ -7,21 +7,32 @@ import { User } from "@modules/user/domain/User";
 import { CreateUserErrors } from "./CreateUserErrors";
 import { IUserRepository } from "@modules/user/repository/IUserRepository";
 import { UserMappers } from "@modules/user/mappers/UserMappers";
+import { Authentication } from "@core/infrastructure/Authentication";
 
 
 export class CreateUserUsecase implements UseCase<ICreateUserRequest, Promise<CreateUserResponse>> {
     private userRepository: IUserRepository;
 
-    constructor(userRepository: IUserRepository) {
+    private auth: Authentication;
+
+    constructor(userRepository: IUserRepository, auth: Authentication) {
         this.userRepository = userRepository;
+        this.auth = auth;
     }
 
     async execute(request: ICreateUserRequest): Promise<CreateUserResponse> {
-        const { name, email } = request;
+        const { name, email, password } = request;
 
         const existingUser = await this.userRepository.getUserByEmail(email);
         if (existingUser) {
+            console.error("User already exists:", email);
             return fail(Result.fail(CreateUserErrors.UserAlreadyExists.create(email)));
+        }
+
+        const firebaseUser = await this.auth.createUser(email, password);
+        if (!firebaseUser) {
+            console.error("Failed to create user in Firebase Authentication");
+            return fail(Result.fail(CreateUserErrors.UnableToCreateUser.create()));
         }
 
         const userOrError = User.create(
@@ -35,6 +46,7 @@ export class CreateUserUsecase implements UseCase<ICreateUserRequest, Promise<Cr
             null
         );
         if (userOrError.isFailure) {
+            console.error("Failed to create user entity");
             return fail(Result.fail(CreateUserErrors.UnableToCreateUser.create()));
         }
 

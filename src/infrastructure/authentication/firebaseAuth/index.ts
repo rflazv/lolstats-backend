@@ -1,8 +1,9 @@
 import { auth } from "@infrastructure/firebase";
 import { Auth, UserRecord } from "firebase-admin/auth";
+import { Authentication } from "../../../core/infrastructure/Authentication";
 
 
-class FirebaseAuth {
+class FirebaseAuth implements Authentication {
     private static instance: FirebaseAuth;
     private auth: Auth;
 
@@ -40,6 +41,16 @@ class FirebaseAuth {
             email,
             password,
         });
+    }
+
+    verifyIdToken(idToken: string): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+    getUserByEmail(email: string): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+    sendPasswordResetEmail(email: string): Promise<void> {
+        throw new Error("Method not implemented.");
     }
 }
 

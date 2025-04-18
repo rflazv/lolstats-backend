@@ -13,6 +13,7 @@ type ValidationResult = Either<
   | CreateUserErrors.RequiredName
   | CreateUserErrors.RequiredEmail
   | CreateUserErrors.InvalidEmail
+  | CreateUserErrors.RequiredPassword
   | CreateUserErrors.UnexpectedError,
   ICreateUserRequest
 >;
@@ -26,6 +27,9 @@ export class CreateUserValidator {
       .string()
       .email(CreateUserErrors.InvalidEmail.create().errorValue().message)
       .required(CreateUserErrors.RequiredEmail.create().errorValue().message),
+    password: yup
+      .string()
+      .required(CreateUserErrors.RequiredPassword.create().errorValue().message),
   });
 
   public async validate(
@@ -47,6 +51,10 @@ export class CreateUserValidator {
       
         if (errors.email === CreateUserErrors.InvalidEmail.create().errorValue().message) {
           return fail(CreateUserErrors.InvalidEmail.create());
+        }
+
+        if (errors.password === CreateUserErrors.RequiredPassword.create().errorValue().message) {
+          return fail(CreateUserErrors.RequiredPassword.create());
         }
       
         return fail(CreateUserErrors.UnexpectedError.create());
