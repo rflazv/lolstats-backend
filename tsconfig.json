@@ -19,7 +19,9 @@
         "@core/*": ["core/*"],
         "@infrastructure/*": ["infrastructure/*"],
         "@modules/*": ["modules/*"],
-        "@config/*": ["config/*"]
+        "@config/*": ["config/*"],
+        "@shared/*": ["shared/*"],
+        "@": ["*"],
       }
     },
     "include": [
