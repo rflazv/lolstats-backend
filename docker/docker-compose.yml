@@ -1,15 +1,18 @@
+# docker/docker-compose.yml
+
 version: "3.8"
 
 services:
   app:
+    image: lolstats-backend:latest
     build:
-      context: .
-      dockerfile: docker/Dockerfile
+      context: ..
+      dockerfile: ./docker/Dockerfile
     container_name: lolstats-backend
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
+      - ../:/app
       - /app/node_modules
     environment:
       - NODE_ENV=production

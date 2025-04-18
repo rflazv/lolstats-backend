@@ -1,20 +1,22 @@
 # Etapa 1: build da aplicação
-FROM node:18 AS builder
+FROM node:22 AS builder
 
 WORKDIR /app
 
-COPY ../package*.json ./
+COPY package*.json ./
 RUN npm install
 
-COPY .. .
+COPY . .
 RUN npm run build
 
-# Etapa 2: imagem final para produção
-FROM node:18-slim
+# Etapa 2: imagem final
+FROM node:22-slim
 
 WORKDIR /app
 
-COPY ../package*.json ./
+COPY package*.json ./
+COPY .env ./
+COPY firebase.json ./
 RUN npm install --only=production
 
 COPY --from=builder /app/dist ./dist
