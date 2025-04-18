@@ -2,6 +2,7 @@
 
 
 export abstract class Authentication {
+    abstract signIn(email: string, password: string): Promise<string | null>;
     abstract createUser(email: string, password: string): Promise<string>;
     abstract deleteUser(uid: string): Promise<void>;
     abstract getUser(uid: string): Promise<any>;

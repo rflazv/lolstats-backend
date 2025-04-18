@@ -1,12 +1,13 @@
 import { auth } from "@infrastructure/firebase";
 import { Auth, UserRecord } from "firebase-admin/auth";
-import { Authentication } from "../../../core/infrastructure/Authentication";
+import { Authentication } from "@core/infrastructure/Authentication";
+import axios from "axios";
 
 
 class FirebaseAuth implements Authentication {
     private static instance: FirebaseAuth;
-    private auth: Auth;
 
+    private auth: Auth;
 
     constructor() {
         this.auth = auth;
@@ -18,6 +19,29 @@ class FirebaseAuth implements Authentication {
         }
 
         return FirebaseAuth.instance;
+    }
+
+    public async signIn(email: string, password: string): Promise<string> {
+        const userRecord = await this.auth.getUserByEmail(email);
+        if (!userRecord) {
+            throw new Error("User not found");
+        }
+
+        const response = await axios.post(
+            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_API_KEY}`,
+            {
+              email,
+              password,
+              returnSecureToken: true,
+            }
+        );
+        
+        if (response.status !== 200) {
+            throw new Error("Failed to sign in");
+        }
+
+        const { idToken } = response.data;
+        return idToken;
     }
 
     public async createUser(email: string, password: string): Promise<string> {
