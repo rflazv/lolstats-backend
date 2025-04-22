@@ -6,7 +6,7 @@ export { default as CreateChampionUseCase } from './usecases/CreateChampionUseCa
 export { default as GetAllChampionsController } from './controllers/GetAllChampionsController';
 export { default as GetChampionByIdController } from './controllers/GetChampionsByIdController';
 export { default as GetChampionByNameController } from './controllers/GetChampionByNameController';
-export { default as CreateChampionController } from './controllers/CreateChampionController';
+export { default as CreateChampionController } from './usecases/CreateChampionUsecase/CreateChampionController';
 
 export { default as ChampionRepository } from './repository/ChampionRepository';
 

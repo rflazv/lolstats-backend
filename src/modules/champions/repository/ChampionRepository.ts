@@ -1,6 +1,7 @@
 import Champion from "@infrastructure/database/mongoose/models/Champion";
+import { IChampionRepository } from "./IChampionRepository";
 
-class ChampionRepository {
+export class ChampionRepository implements IChampionRepository {
     async findAll() {
         return Champion.find();
     }
@@ -26,5 +27,3 @@ class ChampionRepository {
         return Champion.findByIdAndDelete(id);
     }
 }
-
-export default new ChampionRepository();
