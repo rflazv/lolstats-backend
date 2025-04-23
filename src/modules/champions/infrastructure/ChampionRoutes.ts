@@ -2,9 +2,10 @@ import { Router } from 'express';
 import GetAllChampionsController from '../controllers/GetAllChampionsController';
 import GetChampionByIdController from '../controllers/GetChampionsByIdController';
 import GetChampionByNameController from '../controllers/GetChampionByNameController';
-import CreateChampionController from '../controllers/CreateChampionController';
+import CreateChampionController from '../usecases/CreateChampionUsecase/CreateChampionController';
 import UpdateChampionController from '../controllers/UpdateChampionController';
 import DeleteChampionController from '../controllers/DeleteChampionController';
+import { createChampionController } from '../usecases/CreateChampionUsecase';
 
 export class ChampionRoutes {
   private router: Router;
@@ -29,13 +30,7 @@ export class ChampionRoutes {
         next(error);
       }
     });
-    this.router.post('/champions', async (req, res, next) => {
-      try {
-        await CreateChampionController.handle(req, res);
-      } catch (error) {
-        next(error);
-      }
-    });
+    this.router.post('/champions', createChampionController.execute.bind(createChampionController));
     this.router.put('/champions/:id', async (req, res, next) => {
       try {
         await UpdateChampionController.handle(req, res);
