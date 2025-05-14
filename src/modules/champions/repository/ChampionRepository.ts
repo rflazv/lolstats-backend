@@ -3,7 +3,7 @@ import { IChampionRepository } from "./IChampionRepository";
 
 export class ChampionRepository implements IChampionRepository {
     async findAll() {
-        return Champion.find();
+        return Champion.find(); // sem filtros
     }
 
     async findById(id: string) {
@@ -16,7 +16,7 @@ export class ChampionRepository implements IChampionRepository {
     }
 
     async findByName(name: string) {
-        return await Champion.findOne({ name: new RegExp(name, 'i') });
+        return Champion.findOne({ name: new RegExp(name, 'i') });
     }
 
     async update(id: string, data: any) {

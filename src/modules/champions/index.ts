@@ -1,12 +1,13 @@
-export { default as GetAllChampionsUseCase } from './usecases/GetAllChampionsUseCase';
-export { default as GetChampionByIdUseCase } from './usecases/GetChampionByIdUseCase';
-export { default as GetChampionByNameUseCase } from './usecases/GetChampionByNameUseCase';
-export { default as CreateChampionUseCase } from './usecases/CreateChampionUseCase';
+export { getAllChampionsUseCase } from './usecases/GetAllChampionsUseCase';
+export { GetChampionByIdUseCase } from './usecases/GetChampionByIdUseCase';
+export { getChampionByNameUseCase } from './usecases/GetChampionByNameUseCase';
+export { createChampionUsecase } from './usecases/CreateChampionUseCase';
+export { UpdateChampionUseCase } from './usecases/UpdateChampionUseCase';
 
-export { default as GetAllChampionsController } from './controllers/GetAllChampionsController';
-export { default as GetChampionByIdController } from './controllers/GetChampionsByIdController';
-export { default as GetChampionByNameController } from './controllers/GetChampionByNameController';
-export { default as CreateChampionController } from './usecases/CreateChampionUsecase/CreateChampionController';
+export { GetAllChampionsController } from './usecases/GetAllChampionsUseCase';
+export { GetChampionByIdController } from './usecases/GetChampionByIdUseCase';
+export { GetChampionByNameController } from './usecases/GetChampionByNameUseCase';
+export { CreateChampionController } from './usecases/CreateChampionUseCase';
+export { UpdateChampionController } from './usecases/UpdateChampionUseCase';
 
-export { default as ChampionRepository } from './repository/ChampionRepository';
-
+export { ChampionRepository } from './repository/ChampionRepository';

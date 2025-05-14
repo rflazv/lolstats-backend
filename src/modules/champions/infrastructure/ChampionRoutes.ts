@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import GetAllChampionsController from '../controllers/GetAllChampionsController';
-import GetChampionByIdController from '../controllers/GetChampionsByIdController';
-import GetChampionByNameController from '../controllers/GetChampionByNameController';
+import GetAllChampionsController from '../usecases/GetAllChampionsUseCase/GetAllChampionsController';
+import GetChampionByIdController from '../usecases/GetChampionsByIdUsecase/GetChampionsByIdController';
+import GetChampionByNameController from '../usecases/GetChampionByNameUseCase/GetChampionByNameController';
 import CreateChampionController from '../usecases/CreateChampionUsecase/CreateChampionController';
 import UpdateChampionController from '../controllers/UpdateChampionController';
 import DeleteChampionController from '../controllers/DeleteChampionController';
